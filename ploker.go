@@ -12,6 +12,7 @@ import (
 	"github.com/coder/websocket/wsjson"
 )
 
+// GetSessionID is used to retrieve the session ID from a given ploker URL.
 func GetSessionID(surl string) (string, error) {
 	u, err := url.Parse(surl)
 	if err != nil {
