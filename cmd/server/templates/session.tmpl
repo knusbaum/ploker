@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Planning Poker 🃏</title>
+    <style type="text/css" media="screen">
+      .card {
+      -moz-border-radius: 15px;
+      -webkit-border-radius: 15px;
+      border-radius: 15px;
+      width: 50px;
+      height: 75px;
+      margin: 0 auto;
+      padding: 10px;
+      vertical-align: middle;
+      text-align: center;
+      display: table-cell;
+      }
+      .card.none {
+      background-color: #eee;
+      }
+      .card.hidden {
+      background-color: #ccf;
+      }
+      .card.shown {
+      background-color: #fff;
+      border:1px solid #ccf;
+      }
+      .usercell {
+      display: block;
+      float: left;
+      padding: 20px;
+      font-size: 20pt;
+      }
+      .cells {
+      display: block;
+      overflow: auto;
+      }
+      .bids {
+      width: fit-content;
+      margin: 0 auto;
+      }
+      .cardcontainer {
+      width: fit-content;
+      margin: 0 auto;
+      }
+      .bids button {
+      font-size: 20pt;
+      }
+      #countdown {
+      display: table;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(100, 100, 100, 0.4);
+      }
+      #countdowntxt {
+      display: table-cell;
+      vertical-align: middle;
+      }
+      #countdowntxtinner {
+      margin: 0 auto;
+      font-size: 100pt;
+      }
+    </style>
+    <script src="/wasm_exec.js"></script>
+    <script>
+      const go = new Go();
+      WebAssembly.instantiateStreaming(fetch("/ploker.wasm"), go.importObject).then((result) => {
+      go.run(result.instance);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="content"></div>
+  </body>
+</html>

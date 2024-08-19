@@ -1,0 +1,64 @@
+<div style="text-align: center;">
+  <div style="width: fit-content; margin: 0 auto;">
+    <h1>Planning Poker 🃏</h1>
+    {{ $world := .World }}
+    {{if gt $world.Countdown 0 }}
+    <div id="countdown">
+      <div id="countdowntxt">
+	<div id="countdowntxtinner">
+	  {{ $world.Countdown }}
+	</div>
+      </div>
+    </div>
+    {{ end }}
+    <div class="cells">
+      {{ range .Clients }}
+      <div class="usercell">
+	<p>
+	  {{.Name}}
+	  <div class="cardcontainer">
+	  {{if $world.Reveal}}
+	  <div class="card shown">
+	    {{if gt .Bid 0}}
+	    {{.Bid}}
+	    {{else}}
+	    ☕
+	    {{end}}
+	  </div>
+	  {{else}}
+	  {{ if .DidBid }}
+	  <div class="card hidden">
+	  </div>
+	  {{ else }}
+	  <div class="card none">
+	  </div>
+	  {{end}}
+	  {{end}}
+	  </div>
+	</p>
+      </div>
+      {{end}}
+    </div>
+    <div class="bids">
+      <table>
+	<tr>
+	  <td><button onclick="bid(0)">☕</button></td>
+	  <td><button onclick="bid(1)">1</button></td>
+	  <td><button onclick="bid(2)">2</button></td>
+	  <td><button onclick="bid(3)">3</button></td>
+	  <td><button onclick="bid(5)">5</button></td>
+	  <td><button onclick="bid(8)">8</button></td>
+	  <td><button onclick="bid(13)">13</button></td>
+	  <td><button onclick="bid(21)">21</button></td>
+	</tr>
+      </table>
+    </div>
+    <p>
+      {{ if $world.Reveal }}
+      <button onclick="reset()">Reset</button>
+      {{ else }}
+      <button onclick="reveal()">Reveal</button>
+      {{end}}
+    </p>
+  </div>
+</div>
