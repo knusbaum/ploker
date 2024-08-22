@@ -137,7 +137,7 @@ func main() {
 		}
 
 		go func() {
-			defer log.Printf("Stopping pinging for client %p", c)
+			defer log.Printf("Stopping pinging for client %v:%v@%v", name, cid, sid)
 			for {
 				// Keep the websocket alive through any proxy
 				// by pinging every 10 seconds. Most proxies seem
@@ -155,7 +155,7 @@ func main() {
 					log.Printf("Ping error: %v\n", err)
 					return
 				}
-				log.Printf("ping %v@%v", cid, sid)
+				log.Printf("ping %v:%v@%v", name, cid, sid)
 			}
 		}()
 
@@ -168,12 +168,16 @@ func main() {
 			}
 			switch up.Type {
 			case ploker.WorldUpdate:
+				log.Printf("%v:%v@%v: World: %v -> %v", name, cid, sid, up.Key, up.Value)
 				sess.UpdateWorld(up.Key, up.Value)
 			case ploker.UserUpdate:
+				log.Printf("%v:%v@%v: User: %v -> %v", name, cid, sid, up.Key, up.Value)
 				sess.UpdateUser(cid, up.Key, up.Value)
 			case ploker.ResetUpdate:
+				log.Printf("%v:%v@%v: RESET", name, cid, sid)
 				sess.reset()
 			case ploker.RevealUpdate:
+				log.Printf("%v:%v@%v: Reveal", name, cid, sid)
 				go func() {
 					for i := 3; i > 0; i-- {
 						sess.UpdateWorld("countdown", i)
@@ -185,7 +189,7 @@ func main() {
 					sess.broadcast(ctx)
 				}()
 			default:
-				log.Printf("Unknown update type %v", up.Type)
+				log.Printf("%v:%v@%v: Unknown update type %v", name, cid, sid, up.Type)
 				continue
 			}
 			sess.broadcast(ctx)
