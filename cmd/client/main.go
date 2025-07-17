@@ -145,7 +145,7 @@ func dosocket(doc js.Value, hostPort string, tmpl *template.Template, id, name s
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	c, _, err := websocket.Dial(ctx, fmt.Sprintf("ws://%s/sock?id=%s&name=%s", hostPort, url.QueryEscape(id), url.QueryEscape(name)), nil)
+	c, _, err := websocket.Dial(ctx, fmt.Sprintf("wss://%s/sock?id=%s&name=%s", hostPort, url.QueryEscape(id), url.QueryEscape(name)), nil)
 	if err != nil {
 		// TODO: template
 		setContent(doc, fmt.Sprintf("<H1>Session closed: %v</h1>", err))
