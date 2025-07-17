@@ -15,7 +15,7 @@ out/ploker.wasm: cmd/client/*
 	GOOS=js GOARCH=wasm go build -o out/ploker.wasm ./cmd/client
 
 out/wasm_exec.js:
-	cp "$(shell go env GOROOT)/lib/wasm/wasm_exec.js" out/
+	cp "$(shell go env GOROOT)/misc/wasm/wasm_exec.js" out/
 
 out/server: cmd/server/*
 	CGO_ENABLED=0 go build -o out/server ./cmd/server
